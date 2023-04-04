@@ -5,7 +5,7 @@ pipeline {
       stage('拉取代码') {
           steps {
               echo '拉取代码'
-              checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'YHF', url: 'git@git.nju.edu.cn:201250203/sentistrength.git']])
+              checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'YHF', url: 'git@git.nju.edu.cn:201250203/web-backend.git']])
             }
         }
     stage('编译构建') {
