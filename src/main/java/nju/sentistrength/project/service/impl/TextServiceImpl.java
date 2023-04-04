@@ -3,14 +3,29 @@ package nju.sentistrength.project.service.impl;
 import nju.sentistrength.project.core.Result;
 import nju.sentistrength.project.core.ResultGenerator;
 import nju.sentistrength.project.service.TextService;
+import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import uk.ac.wlv.sentistrength.classificationResource.ClassificationOptions;
 import uk.ac.wlv.sentistrength.Corpus;
-import uk.ac.wlv.sentistrength.SentiStrengthWeb;
+import nju.sentistrength.project.SentiStrengthWeb;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Service
 @Transactional
@@ -26,9 +41,19 @@ public class TextServiceImpl implements TextService {
     }
 
     @Override
-    public Result analyzeFile(File file) {
+    public ResponseEntity<InputStreamResource> analyzeFile(HttpServletResponse response, MultipartFile file, HttpServletRequest httpServletRequest) throws IOException {
         corpus.initialise();
-        return ResultGenerator.genSuccessResult("success", SentiStrengthWeb.analyzeFile(corpus, file));
+        File reFile = new File("./tmp/temp.txt");
+        FileUtils.copyInputStreamToFile(file.getInputStream(), reFile);
+        String outputPath = SentiStrengthWeb.analyzeFile(corpus, reFile);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(new File(outputPath)));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename());
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(resource.contentLength())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
     }
 
     public void parseOptionsForCorpus(String[] checkedOptions) {
