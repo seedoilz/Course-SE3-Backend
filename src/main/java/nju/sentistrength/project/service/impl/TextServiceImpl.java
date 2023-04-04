@@ -4,6 +4,7 @@ import nju.sentistrength.project.core.Result;
 import nju.sentistrength.project.core.ResultGenerator;
 import nju.sentistrength.project.service.TextService;
 import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -18,11 +19,10 @@ import uk.ac.wlv.sentistrength.Corpus;
 import nju.sentistrength.project.SentiStrengthWeb;
 
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -46,14 +46,25 @@ public class TextServiceImpl implements TextService {
         File reFile = new File("./tmp/temp.txt");
         FileUtils.copyInputStreamToFile(file.getInputStream(), reFile);
         String outputPath = SentiStrengthWeb.analyzeFile(corpus, reFile);
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(new File(outputPath)));
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename());
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(resource.contentLength())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
+        String type = new MimetypesFileTypeMap().getContentType(outputPath);
+        response.setHeader("Content-type",type);
+//        String code = new String(outputPath.getBytes("utf-8"), "iso-8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=output.txt");
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        FileInputStream inputStream = new FileInputStream(outputPath);
+        OutputStream outputStream = response.getOutputStream();
+        byte[] buff = new byte[1024];
+        BufferedInputStream bis = null;
+        bis = new BufferedInputStream(inputStream);
+        int bytesRead = -1;
+        while ((bytesRead = bis.read(buff)) != -1) {
+            outputStream.write(buff, 0, bytesRead);
+        }
+        bis.close();
+        outputStream.close();
+        return null;
     }
 
     public void parseOptionsForCorpus(String[] checkedOptions) {

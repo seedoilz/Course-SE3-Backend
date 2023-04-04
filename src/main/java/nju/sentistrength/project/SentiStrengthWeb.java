@@ -11,13 +11,13 @@ public class SentiStrengthWeb {
 
     public static void main(String[] args) {
         String text = "hey witch wat cha been up too";
-        String filePath = "/Users/seedoilz/Codes/sentistrength/src/main/resources/test.txt";
-        File file = new File(filePath);
+//        String filePath = "/Users/seedoilz/Codes/sentistrength/src/main/resources/test.txt";
+//        File file = new File(filePath);
         Corpus corpus = new Corpus();
         corpus.initialise();
         corpus.options.bgExplainClassification = false;
         corpus.options.bgEchoText = false;
-        analyzeFile(corpus, file);
+        analyzeText(corpus, text);
     }
     public static String analyzeText(Corpus corpus, String text) {
         int iPos = 1;
