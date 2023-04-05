@@ -73,4 +73,13 @@ public class SentiStrengthWeb {
         corpus.classifyAllLinesInInputFile(file, -1, sOutputFile);
         return sOutputFile;
     }
+
+    public static String machineLearning(Corpus corpus, String sInputFile, boolean bDoAll, int iMinImprovement,
+                                       boolean bUseTotalDifference, int iIterations, int iMultiOptimisations){
+        SentiStrength sentiStrength = new SentiStrength();
+        String outputPath = "./tmp/material_out.txt";
+        sentiStrength.runMachineLearning(corpus, sInputFile, bDoAll, iMinImprovement,
+                bUseTotalDifference, iIterations, iMultiOptimisations, outputPath);
+        return outputPath;
+    }
 }

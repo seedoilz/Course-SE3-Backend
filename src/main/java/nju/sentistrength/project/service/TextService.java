@@ -17,4 +17,6 @@ public interface TextService {
     ResponseEntity<InputStreamResource> analyzeFile(HttpServletResponse response, MultipartFile file, HttpServletRequest httpServletRequest) throws IOException;
 
     Result setOptions(String[] options);
+
+    ResponseEntity<InputStreamResource> runMachineLearning(HttpServletResponse response, MultipartFile file, HttpServletRequest httpServletRequest) throws IOException;
 }

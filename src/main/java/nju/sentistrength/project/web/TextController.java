@@ -33,4 +33,9 @@ public class TextController {
     public Result<String> setOptions(@RequestParam("options") String[] options){
         return textService.setOptions(options);
     }
+
+    @PostMapping("/machine_learning")
+    public ResponseEntity<InputStreamResource> runMachineLearning(HttpServletResponse response, @RequestParam MultipartFile file, HttpServletRequest httpServletRequest) throws IOException {
+        return textService.runMachineLearning(response, file, httpServletRequest);
+    }
 }

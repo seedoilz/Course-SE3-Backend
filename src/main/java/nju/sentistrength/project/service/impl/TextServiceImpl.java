@@ -55,11 +55,40 @@ public class TextServiceImpl implements TextService {
         return null;
     }
 
+
     @Override
     public Result setOptions(String[] options) {
 //        corpus.initialise();
         parseOptionsForCorpus(options);
         return ResultGenerator.genSuccessResult();
+    }
+
+    @Override
+    public ResponseEntity<InputStreamResource> runMachineLearning(HttpServletResponse response, MultipartFile file, HttpServletRequest httpServletRequest) throws IOException {
+        String inputPath = "./tmp/material.txt";
+        File material = new File(inputPath);
+        FileUtils.copyInputStreamToFile(file.getInputStream(), material);
+        String outputPath = SentiStrengthWeb.machineLearning(this.corpus, inputPath,
+                true, 0, true,1, 1);
+        String type = new MimetypesFileTypeMap().getContentType(outputPath);
+        response.setHeader("Content-type",type);
+//        String code = new String(outputPath.getBytes("utf-8"), "iso-8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=output.txt");
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        FileInputStream inputStream = new FileInputStream(outputPath);
+        OutputStream outputStream = response.getOutputStream();
+        byte[] buff = new byte[1024];
+        BufferedInputStream bis = null;
+        bis = new BufferedInputStream(inputStream);
+        int bytesRead = -1;
+        while ((bytesRead = bis.read(buff)) != -1) {
+            outputStream.write(buff, 0, bytesRead);
+        }
+        bis.close();
+        outputStream.close();
+        return null;
     }
 
     public void parseOptionsForCorpus(String[] checkedOptions) {
