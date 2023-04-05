@@ -3,7 +3,7 @@
 function kill_project()
 {
   project_pid=`ps aux | grep "WebBackend-1.0-SNAPSHOT.jar" | grep -v grep | awk 'END{print $2}'`
-  if [  $project_pid -gt 0 ];then
+  if [  $project_pid > 0 ];then
         echo "项目已经启动，开始关闭项目，项目pid为: $project_pid "
         echo "--------------------"
         kill -9 `ps aux | grep "WebBackend-1.0-SNAPSHOT.jar" | grep -v grep | awk 'END{print $2}'`
