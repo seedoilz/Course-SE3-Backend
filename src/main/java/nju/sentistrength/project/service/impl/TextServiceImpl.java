@@ -57,7 +57,7 @@ public class TextServiceImpl implements TextService {
 
     @Override
     public Result setOptions(String[] options) {
-        corpus.initialise();
+//        corpus.initialise();
         parseOptionsForCorpus(options);
         return ResultGenerator.genSuccessResult();
     }
