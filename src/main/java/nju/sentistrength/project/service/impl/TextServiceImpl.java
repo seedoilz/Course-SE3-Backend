@@ -4,12 +4,7 @@ import nju.sentistrength.project.core.Result;
 import nju.sentistrength.project.core.ResultGenerator;
 import nju.sentistrength.project.service.TextService;
 import org.apache.commons.io.FileUtils;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,15 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import uk.ac.wlv.sentistrength.classificationResource.ClassificationOptions;
 import uk.ac.wlv.sentistrength.Corpus;
 import nju.sentistrength.project.SentiStrengthWeb;
-
-
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Service
 @Transactional
@@ -35,14 +25,12 @@ public class TextServiceImpl implements TextService {
 
     @Override
     public Result analyzeText(String text) {
-        corpus.initialise();
         return ResultGenerator.genSuccessResult("success", SentiStrengthWeb.analyzeText(corpus, text));
 //        return ResultGenerator.genSuccessResult("success", System.getProperty("user.dir"));
     }
 
     @Override
     public ResponseEntity<InputStreamResource> analyzeFile(HttpServletResponse response, MultipartFile file, HttpServletRequest httpServletRequest) throws IOException {
-        corpus.initialise();
         File reFile = new File("./tmp/temp.txt");
         FileUtils.copyInputStreamToFile(file.getInputStream(), reFile);
         String outputPath = SentiStrengthWeb.analyzeFile(corpus, reFile);
@@ -65,6 +53,13 @@ public class TextServiceImpl implements TextService {
         bis.close();
         outputStream.close();
         return null;
+    }
+
+    @Override
+    public Result setOptions(String[] options) {
+        corpus.initialise();
+        parseOptionsForCorpus(options);
+        return ResultGenerator.genSuccessResult();
     }
 
     public void parseOptionsForCorpus(String[] checkedOptions) {

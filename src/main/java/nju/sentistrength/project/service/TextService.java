@@ -15,4 +15,6 @@ public interface TextService {
     Result analyzeText(String text);
 
     ResponseEntity<InputStreamResource> analyzeFile(HttpServletResponse response, MultipartFile file, HttpServletRequest httpServletRequest) throws IOException;
+
+    Result setOptions(String[] options);
 }

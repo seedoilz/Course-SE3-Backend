@@ -24,8 +24,13 @@ public class TextController {
         return textService.analyzeText(text);
     }
 
-    @GetMapping("/file")
+    @PostMapping("/file")
     public ResponseEntity<InputStreamResource> analyzeFile(HttpServletResponse response, @RequestParam MultipartFile file, HttpServletRequest httpServletRequest) throws IOException {
         return textService.analyzeFile(response, file, httpServletRequest);
+    }
+
+    @PostMapping("/corpus")
+    public Result<String> setOptions(@RequestParam("options") String[] options){
+        return textService.setOptions(options);
     }
 }
