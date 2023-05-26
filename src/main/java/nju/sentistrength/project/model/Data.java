@@ -1,5 +1,6 @@
 package nju.sentistrength.project.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -20,10 +21,12 @@ public class Data {
 
     @Column(name = "created_at")
     @DateTimeFormat(pattern = "yyyy/mm/dd hh:mm:ss")
+    @JSONField(format="yyyy/mm/dd hh:mm:ss")   // 数据库导出页面时json格式化
     private Date createdAt;
 
     @Column(name = "ended_at")
     @DateTimeFormat(pattern = "yyyy/mm/dd hh:mm:ss")
+    @JSONField(format="yyyy/mm/dd hh:mm:ss")
     private Date endedAt;
 
     @Column(name = "is_pull_request")
