@@ -1,5 +1,7 @@
 package nju.sentistrength.project.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -17,9 +19,11 @@ public class Data {
     private String username;
 
     @Column(name = "created_at")
+    @DateTimeFormat(pattern = "yyyy/mm/dd hh:mm:ss")
     private Date createdAt;
 
     @Column(name = "ended_at")
+    @DateTimeFormat(pattern = "yyyy/mm/dd hh:mm:ss")
     private Date endedAt;
 
     @Column(name = "is_pull_request")
