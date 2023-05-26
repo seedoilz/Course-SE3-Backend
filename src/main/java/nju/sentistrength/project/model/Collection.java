@@ -1,7 +1,10 @@
 package nju.sentistrength.project.model;
 
+import org.apache.ibatis.type.Alias;
+
 import javax.persistence.*;
 
+@Alias("DataCollection")
 public class Collection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
