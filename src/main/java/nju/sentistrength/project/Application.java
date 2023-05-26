@@ -18,7 +18,7 @@ public class Application {
             Field logger = cls.getDeclaredField("logger");
             u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
         } catch (Exception e) {
-            // ignore
+            // ignor
         }
     }
     public static void main(String[] args) {
