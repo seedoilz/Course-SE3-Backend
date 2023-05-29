@@ -29,9 +29,11 @@ public class DataController {
     }
 
     @PostMapping("/listDataByCollection")
-    public Result getDataByVersion(@RequestParam("collectionId") int collectionId){
-        return ResultGenerator.genSuccessResult(
-                dataService.getDataByCollection(collectionId));
+    public Result getDataByVersion(@RequestParam("collectionId") int collectionId, @RequestParam(defaultValue = "0") Integer page){
+        PageHelper.startPage(page, 50);
+        List<Data> list =dataService.getDataByCollection(collectionId);
+        PageInfo pageInfo = new PageInfo(list);
+        return ResultGenerator.genSuccessResult(pageInfo);
     }
 
     @PostMapping("/listSentiDataByVersion")
@@ -72,7 +74,7 @@ public class DataController {
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
+        PageHelper.startPage(page, 50);
         List<Data> list = dataService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
