@@ -11,7 +11,7 @@
   </resultMap>
 
   <insert id="addToCollection" useGeneratedKeys="true">
-    insert into collection_data (collection_id, data_id) values
+    insert ignore into collection_data (collection_id, data_id) values
     <foreach collection="dataIds" item="item" index="index" separator=",">
         (#{collectionId}, #{item})
     </foreach>
