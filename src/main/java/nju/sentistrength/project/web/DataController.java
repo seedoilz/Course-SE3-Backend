@@ -22,6 +22,24 @@ public class DataController {
     @Resource
     private DataService dataService;
 
+    @PostMapping("/listSentiDataByTime")
+    public Result getDataByTime(@RequestParam("collectionId") int collectionId,@RequestParam("beginDate") String beginDateStr,@RequestParam("endDate") String endDateStr){
+        return ResultGenerator.genSuccessResult(
+                dataService.getDataByTime(collectionId, beginDateStr, endDateStr));
+    }
+
+    @PostMapping("/listSentiDataByVersion")
+    public Result getDataByVersion(@RequestParam("collectionId") int collectionId,@RequestParam("version") String version){
+        return ResultGenerator.genSuccessResult(
+                dataService.getDataByVersion(collectionId, version));
+    }
+
+    @PostMapping("/listSentiDataByUsername")
+    public Result getDataByUsername(@RequestParam("collectionId") int collectionId,@RequestParam("username") String username){
+        return ResultGenerator.genSuccessResult(
+                dataService.getDataByUsername(collectionId, username));
+    }
+
     @PostMapping("/add")
     public Result add(Data data) {
         dataService.save(data);

@@ -19,4 +19,47 @@
     <result column="negative_score" jdbcType="INTEGER" property="negativeScore" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+
+    <resultMap id="timeSentimentData" type="nju.sentistrength.project.model.VO.TimeSentimentData">
+        <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime"/>
+        <result column="positive_number" jdbcType="INTEGER" property="positiveNumber" />
+        <result column="neutral_number" jdbcType="INTEGER" property="neutralNumber" />
+        <result column="negative_number" jdbcType="INTEGER" property="negativeNumber" />
+    </resultMap>
+
+
+
+  <select id="getData" resultMap="timeSentimentData">
+    select DATE_FORMAT(d.created_at, '%Y-%m') begin_time
+         , COUNT(if(d.positive_score+d.negative_score > 0,1,null)) positive_number
+         , COUNT(if(d.positive_score+d.negative_score = 0,1,null)) neutral_number
+         , COUNT(if(d.positive_score+d.negative_score &lt; 0,1,null)) negative_number
+    from `data` d, collection c, collection_data c_d where
+        c.id = #{collectionId} AND c.id = c_d.collection_id AND c_d.data_id=d.id
+         AND d.created_at >= #{beginDate} AND d.created_at &lt;= #{endDate}
+    group by begin_time;
+  </select>
+
+    <select id="getDataByVersion" resultMap="timeSentimentData">
+        select d.version_number version
+            ,COUNT(if(d.positive_score+d.negative_score > 0,1,null)) positive_number
+             , COUNT(if(d.positive_score+d.negative_score = 0,1,null)) neutral_number
+             , COUNT(if(d.positive_score+d.negative_score &lt; 0,1,null)) negative_number
+    from `data` d, collection c, collection_data c_d where
+            c.id = #{collectionId} AND c.id = c_d.collection_id AND c_d.data_id=d.id
+            AND d.version_number = #{version}
+    group by version;
+    </select>
+
+    <select id="getDataByUsername" resultType="nju.sentistrength.project.model.VO.ScoreSentimentData">
+        select d.username username,
+               d.project_name project,
+               d.created_at createdAt,
+                d.positive_score positiveScore,
+               d.negative_score negativeScore,
+               d.version_number version
+        from `data` d, collection c, collection_data c_d where
+            c.id = #{collectionId} AND c.id = c_d.collection_id AND c_d.data_id=d.id
+            AND d.username = #{username};
+    </select>
 </mapper>

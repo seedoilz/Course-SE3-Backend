@@ -8,4 +8,11 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
+
+  <insert id="addToCollection" useGeneratedKeys="true">
+    insert into collection_data (collection_id, data_id) values
+    <foreach collection="dataIds" item="item" index="index" separator=",">
+        (#{collectionId}, #{item})
+    </foreach>
+  </insert>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -19,4 +20,10 @@ public class CollectionServiceImpl extends AbstractService<Collection> implement
     @Resource
     private CollectionMapper collectionMapper;
 
+    @Override
+    public void addToCollection(List<Integer> dataIds,int collectionId) {
+        if(!dataIds.isEmpty()){
+            collectionMapper.addToCollection(dataIds, collectionId);
+        }
+    }
 }

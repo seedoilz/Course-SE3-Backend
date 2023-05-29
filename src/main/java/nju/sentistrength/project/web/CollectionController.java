@@ -5,10 +5,7 @@ import nju.sentistrength.project.model.Collection;
 import nju.sentistrength.project.service.CollectionService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,8 +19,14 @@ public class CollectionController {
     @Resource
     private CollectionService collectionService;
 
+    @PostMapping("/addToCollection")
+    public Result addToCollection(@RequestBody List<Integer> dataIds, @RequestParam("collectionId") int collectionId){
+        collectionService.addToCollection(dataIds, collectionId);
+        return ResultGenerator.genSuccessResult();
+    }
+
     @PostMapping("/add")
-    public Result add(Collection collection) {
+    public Result add(@RequestBody Collection collection) {
         collectionService.save(collection);
         return ResultGenerator.genSuccessResult();
     }
@@ -35,7 +38,7 @@ public class CollectionController {
     }
 
     @PostMapping("/update")
-    public Result update(Collection collection) {
+    public Result update(@RequestBody Collection collection) {
         collectionService.update(collection);
         return ResultGenerator.genSuccessResult();
     }
