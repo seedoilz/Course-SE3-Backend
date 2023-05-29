@@ -27,6 +27,11 @@ public class DataServiceImpl extends AbstractService<Data> implements DataServic
     private DataMapper dataMapper;
 
     @Override
+    public List<Data> getDataByCollection(int collectionId) {
+        return dataMapper.getDataByCollection(collectionId);
+    }
+
+    @Override
     public List<TimeSentimentData> getDataByTime(int collectionId, String beginDateStr, String endDateStr) {
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
         try{

@@ -28,6 +28,12 @@ public class DataController {
                 dataService.getDataByTime(collectionId, beginDateStr, endDateStr));
     }
 
+    @PostMapping("/listDataByCollection")
+    public Result getDataByVersion(@RequestParam("collectionId") int collectionId){
+        return ResultGenerator.genSuccessResult(
+                dataService.getDataByCollection(collectionId));
+    }
+
     @PostMapping("/listSentiDataByVersion")
     public Result getDataByVersion(@RequestParam("collectionId") int collectionId,@RequestParam("version") String version){
         return ResultGenerator.genSuccessResult(

@@ -19,6 +19,7 @@ public class CollectionController {
     @Resource
     private CollectionService collectionService;
 
+
     @PostMapping("/addToCollection")
     public Result addToCollection(@RequestBody List<Integer> dataIds, @RequestParam("collectionId") int collectionId){
         collectionService.addToCollection(dataIds, collectionId);

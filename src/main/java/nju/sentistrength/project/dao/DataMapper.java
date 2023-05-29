@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface DataMapper extends Mapper<Data> {
+    List<Data> getDataByCollection(@Param("collectionId") int collectionId);
+
     List<TimeSentimentData> getData(@Param("collectionId") int collectionId,@Param("beginDate") Date beginTime,@Param("endDate") Date endTime);
 
     List<TimeSentimentData> getDataByVersion(@Param("collectionId") int collectionId, @Param("version") String version);
