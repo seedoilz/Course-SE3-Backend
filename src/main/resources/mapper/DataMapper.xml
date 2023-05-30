@@ -47,7 +47,6 @@
              , COUNT(if(d.positive_score+d.negative_score &lt; 0,1,null)) negative_number
     from `data` d, collection c, collection_data c_d where
             c.id = #{collectionId} AND c.id = c_d.collection_id AND c_d.data_id=d.id
-            AND d.version_number = #{version}
     group by version;
     </select>
 

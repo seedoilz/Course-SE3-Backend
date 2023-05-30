@@ -50,8 +50,8 @@ public class DataServiceImpl extends AbstractService<Data> implements DataServic
     }
 
     @Override
-    public List<TimeSentimentData> getDataByVersion(int collectionId, String version) {
-        return dataMapper.getDataByVersion(collectionId, version);
+    public List<TimeSentimentData> getDataByVersion(int collectionId) {
+        return dataMapper.getDataByVersion(collectionId);
     }
 
     @Override

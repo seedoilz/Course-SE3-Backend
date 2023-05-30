@@ -37,9 +37,9 @@ public class DataController {
     }
 
     @PostMapping("/listSentiDataByVersion")
-    public Result getDataByVersion(@RequestParam("collectionId") int collectionId,@RequestParam("version") String version){
+    public Result getDataByVersion(@RequestParam("collectionId") int collectionId){
         return ResultGenerator.genSuccessResult(
-                dataService.getDataByVersion(collectionId, version));
+                dataService.getDataByVersion(collectionId));
     }
 
     @PostMapping("/listSentiDataByUsername")

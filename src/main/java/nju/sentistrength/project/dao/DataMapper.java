@@ -14,7 +14,7 @@ public interface DataMapper extends Mapper<Data> {
 
     List<TimeSentimentData> getData(@Param("collectionId") int collectionId,@Param("beginDate") Date beginTime,@Param("endDate") Date endTime);
 
-    List<TimeSentimentData> getDataByVersion(@Param("collectionId") int collectionId, @Param("version") String version);
+    List<TimeSentimentData> getDataByVersion(@Param("collectionId") int collectionId);
 
     List<ScoreSentimentData> getDataByUsername(@Param("collectionId") int collectionId, @Param("username") String username);
 }
