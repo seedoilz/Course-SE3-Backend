@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
 @Data
 public class ScoreSentimentData {
     private String project;
@@ -12,9 +14,8 @@ public class ScoreSentimentData {
 
     private String version;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    @JSONField(format="yyyy/MM/dd HH:mm:ss")
-    private String createdAt;
+    @JSONField(format="yyyy/MM/dd")
+    private Date createdAt;
 
     private Integer positiveScore;
 
