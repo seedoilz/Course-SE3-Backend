@@ -13,6 +13,6 @@ import java.util.List;
 public interface DataService extends Service<Data> {
     List<Data> getDataByCollection(int collectionId);
     List<TimeSentimentData> getDataByTime(int collectionId, String beginDateStr, String endDateStr);
-    List<TimeSentimentData> getDataByVersion(int collectionId);
+    List<TimeSentimentData> getDataByVersion(String project);
     List<ScoreSentimentData> getDataByUsername(int collectionId, String username);
 }
