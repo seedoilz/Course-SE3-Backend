@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CollectionMapper extends Mapper<Collection> {
     int addToCollection(@Param("dataIds") List<Integer> dataIds,@Param("collectionId")  int collectionId);
+    int deleteCollectionData(@Param("collectionId")  int collectionId);
 }

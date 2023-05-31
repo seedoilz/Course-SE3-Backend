@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface CollectionService extends Service<Collection> {
     void addToCollection(List<Integer> dataIds, int collectionId);
+    void deleteCollectionData(int collectionId);
 }

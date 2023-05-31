@@ -26,4 +26,9 @@ public class CollectionServiceImpl extends AbstractService<Collection> implement
             collectionMapper.addToCollection(dataIds, collectionId);
         }
     }
+
+    @Override
+    public void deleteCollectionData(int collectionId) {
+        collectionMapper.deleteCollectionData(collectionId);
+    }
 }

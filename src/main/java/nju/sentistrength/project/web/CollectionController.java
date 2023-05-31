@@ -33,8 +33,9 @@ public class CollectionController {
     }
 
     @PostMapping("/delete")
-    public Result delete(@RequestParam Integer id) {
-        collectionService.deleteById(id);
+    public Result delete(@RequestParam Integer collectionId) {
+        collectionService.deleteById(collectionId);
+        collectionService.deleteCollectionData(collectionId);
         return ResultGenerator.genSuccessResult();
     }
 

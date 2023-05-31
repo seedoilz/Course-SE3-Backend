@@ -16,4 +16,9 @@
         (#{collectionId}, #{item})
     </foreach>
   </insert>
+
+  <delete id="deleteCollectionData">
+    delete from collection_data where
+    collection_id = #{collectionId};
+  </delete>
 </mapper>
